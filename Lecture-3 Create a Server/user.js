@@ -1,4 +1,5 @@
 const http = require("http");
+const fs = require("fs");
 
 const server = http.createServer((req, res) => {
   console.log(req.url, req.method, req.headers);
@@ -8,7 +9,7 @@ const server = http.createServer((req, res) => {
     res.write("<html>");
     res.write("<head><title>My First Page</title></head>");
     res.write("<body><h1>Enter your Details</h1>");
-    res.write("<form action='/submit-details' method='POST'>");
+    res.write("<form action='/submit-details' method='POST'>"); // Form starts here
     res.write(
       "<input type+'text' name='username' placeholder='Enter your name'><br>"
     );
@@ -22,16 +23,14 @@ const server = http.createServer((req, res) => {
     res.write("</form>");
     res.write("</body>");
     res.write("</html>");
-    res.end();
-  } else if (req.url === "/product") {
+    return res.end();
+  } else if (req.url === "/submit-details" && req.method === "POST") {
+    fs.writeFileSync("user.txt", "reload done"); // Writing static data to user.txt file
+  }
+  {
     res.setHeader("Content-Type", "text/html");
-    res.write("<html>");
-    res.write("<head><title>My First Page</title></head>");
-    res.write("<body><h1>Hello from my Product Section</h1></body>");
-    res.write("</html>");
-    res.end();
-  } else {
-    res.setHeader("Content-Type", "text/html");
+    res.statusCode = 302;
+    res.setHeader("Location", "/"); // Redirecting to home page after form submission
     res.write("<html>");
     res.write("<head><title>My First Page</title></head>");
     res.write("<body><h1>The End</h1></body>");
