@@ -1,1 +1,1 @@
-reload done
+{"username":"king","gender":"male"}

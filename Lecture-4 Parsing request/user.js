@@ -32,9 +32,16 @@ const server = http.createServer((req, res) => {
     });
     req.on("end", () => {
       const fullBody = Buffer.concat(body).toString(); // Converts the buffer to string
-      console.log(fullBody); // Logs the complete form data as a string
+      console.log(fullBody);
+      const params = new URLSearchParams(fullBody);
+      // const bodyObject = {};
+      // for (const [key, value] of params.entries()) {
+      //   bodyObject[key] = value;
+      // }
+      const bodyObject = Object.fromEntries(params);
+      console.log(bodyObject);
+      fs.writeFileSync("user.txt", JSON.stringify(bodyObject));
     });
-    fs.writeFileSync("user.txt", "reload done"); // Writing static data to user.txt file
   }
   {
     res.setHeader("Content-Type", "text/html");
