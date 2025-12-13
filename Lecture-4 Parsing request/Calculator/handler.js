@@ -30,7 +30,7 @@ const requestHandler = (req, res) => {
     return res.end();
   } else if (req.url === "/result" && req.method === "POST") {
     return sum(req, res);
-    
+     
   }
   res.setHeader("Content-Type", "text/html");
   res.write(`<html>
